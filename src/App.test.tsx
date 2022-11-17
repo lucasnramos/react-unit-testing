@@ -11,7 +11,7 @@ describe("Adding todos", () => {
     expect(inputElement).toBeInTheDocument();
   });
 
-  test("should have a button to add task", () => {
+  test("should have a button to add todo", () => {
     render(<App />);
     const addButton = screen.getByTestId("add-todo");
     expect(addButton).toBeInTheDocument();
