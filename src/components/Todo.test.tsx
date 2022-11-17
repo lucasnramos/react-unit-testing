@@ -44,7 +44,12 @@ describe("Showing todo", () => {
     render(<Todo {...mockTodo } />);
     userEvent.click(getToggleTodo())
     await waitFor(() => expect(getToggleTodo()).toBeChecked())
-    
+  })
+
+  test("should toggle checkbox when clicking twice", async () => {
+    render(<Todo {...mockTodo } />);
+    userEvent.dblClick(getToggleTodo())
+    await waitFor(() => expect(getToggleTodo()).not.toBeChecked())
   })
 });
 
