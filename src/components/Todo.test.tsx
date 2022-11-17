@@ -1,5 +1,6 @@
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import Todo, { TodoProps } from "./Todo";
 
 afterAll(cleanup);
@@ -29,6 +30,22 @@ describe("Showing todo", () => {
     render(<Todo {...mockTodo} />);
     expect(screen.getByTestId("delete-todo")).toBeInTheDocument();
   });
+
+  test("should have input checked if task is completed", () => {
+    const completedTodo = {
+      completed: true,
+      description: "completed todo",
+    }
+    render(<Todo {...completedTodo } />);
+    expect(getToggleTodo()).toBeChecked()
+  })
+
+  test("should have input change checked property when clicking", async () => {
+    render(<Todo {...mockTodo } />);
+    userEvent.click(getToggleTodo())
+    await waitFor(() => expect(getToggleTodo()).toBeChecked())
+    
+  })
 });
 
 function getToggleTodo() {
