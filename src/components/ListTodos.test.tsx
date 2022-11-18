@@ -6,6 +6,8 @@ afterAll(cleanup);
 
 const mockTodos: TodoProps[] = [
   {
+    id: 1,
+    userId: 1,
     completed: false,
     title: "Hello!!!!",
   },
