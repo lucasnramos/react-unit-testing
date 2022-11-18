@@ -6,14 +6,14 @@ import { TodoProps } from "./components/Todo";
 function App() {
   const [disable, setDisable] = useState<boolean>(true);
   const [todos, setTodos] = useState<TodoProps[]>([
-    { description: "Hi", completed: false },
+    { title: "Hi", completed: false },
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
   const onAddTodo = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setTodos((todos) => [
       ...todos,
-      { completed: false, description: inputRef.current!.value },
+      { completed: false, title: inputRef.current!.value },
     ]);
     inputRef.current!.value = "";
     setDisable(true);

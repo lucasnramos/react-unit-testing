@@ -7,7 +7,7 @@ afterAll(cleanup);
 
 const mockTodo: TodoProps = {
   completed: false,
-  description: "todo description",
+  title: "todo title",
 };
 
 describe("Showing todo", () => {
@@ -21,9 +21,9 @@ describe("Showing todo", () => {
     expect(getToggleTodo()).toBeInTheDocument();
   });
 
-  test("should show the todo's description", () => {
+  test("should show the todo's title", () => {
     render(<Todo {...mockTodo} />);
-    expect(getTodoDescription()).toBeInTheDocument();
+    expect(getTodotitle()).toBeInTheDocument();
   });
 
   test("should have button to delete todo", () => {
@@ -34,36 +34,38 @@ describe("Showing todo", () => {
   test("should have input checked if task is completed", () => {
     const completedTodo = {
       completed: true,
-      description: "completed todo",
-    }
+      title: "completed todo",
+    };
     render(<Todo {...completedTodo} />);
-    expect(getToggleTodo()).toBeChecked()
-  })
+    expect(getToggleTodo()).toBeChecked();
+  });
 
   test("should have input change checked property when clicking", async () => {
     render(<Todo {...mockTodo} />);
-    userEvent.click(getToggleTodo())
-    await waitFor(() => expect(getToggleTodo()).toBeChecked())
-  })
+    userEvent.click(getToggleTodo());
+    await waitFor(() => expect(getToggleTodo()).toBeChecked());
+  });
 
   test("should toggle checkbox when clicking twice", async () => {
     render(<Todo {...mockTodo} />);
-    userEvent.dblClick(getToggleTodo())
-    await waitFor(() => expect(getToggleTodo()).not.toBeChecked())
-  })
+    userEvent.dblClick(getToggleTodo());
+    await waitFor(() => expect(getToggleTodo()).not.toBeChecked());
+  });
 
-  test('should delete TODO when clicking delete button', async () => {
+  test("should delete TODO when clicking delete button", async () => {
     const { getByTestId, queryByText } = render(<Todo {...mockTodo} />);
-    userEvent.click(getByTestId("delete-todo"))
-    await waitFor(() => expect(queryByText(/todo description/i)).not.toBeInTheDocument())
-    // await waitFor(() => expect(getByText(/todo description/i)).not.toBeVisible())
-  })
+    userEvent.click(getByTestId("delete-todo"));
+    await waitFor(() =>
+      expect(queryByText(/todo title/i)).not.toBeInTheDocument()
+    );
+    // await waitFor(() => expect(getByText(/todo title/i)).not.toBeVisible())
+  });
 });
 
 function getToggleTodo() {
   return screen.getByTestId("toggle-todo");
 }
 
-function getTodoDescription(description = /todo description/i) {
-  return screen.getByText(description);
+function getTodotitle(title = /todo title/i) {
+  return screen.getByText(title);
 }

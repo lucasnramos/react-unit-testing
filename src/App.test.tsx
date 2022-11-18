@@ -57,11 +57,11 @@ function getAddTodoButton() {
   return screen.getByTestId("add-todo");
 }
 
-function addTodo(description = "Hello from jest") {
+function addTodo(title = "Hello from jest") {
   render(<App />);
   const addButton = getAddTodoButton();
   const inputElement = getAddTodoInput();
-  userEvent.type(inputElement, description);
+  userEvent.type(inputElement, title);
   userEvent.click(addButton);
   return { addButton, inputElement };
 }
