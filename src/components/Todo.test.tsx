@@ -36,20 +36,27 @@ describe("Showing todo", () => {
       completed: true,
       description: "completed todo",
     }
-    render(<Todo {...completedTodo } />);
+    render(<Todo {...completedTodo} />);
     expect(getToggleTodo()).toBeChecked()
   })
 
   test("should have input change checked property when clicking", async () => {
-    render(<Todo {...mockTodo } />);
+    render(<Todo {...mockTodo} />);
     userEvent.click(getToggleTodo())
     await waitFor(() => expect(getToggleTodo()).toBeChecked())
   })
 
   test("should toggle checkbox when clicking twice", async () => {
-    render(<Todo {...mockTodo } />);
+    render(<Todo {...mockTodo} />);
     userEvent.dblClick(getToggleTodo())
     await waitFor(() => expect(getToggleTodo()).not.toBeChecked())
+  })
+
+  test('should delete TODO when clicking delete button', async () => {
+    const { getByTestId, queryByText } = render(<Todo {...mockTodo} />);
+    userEvent.click(getByTestId("delete-todo"))
+    await waitFor(() => expect(queryByText(/todo description/i)).not.toBeInTheDocument())
+    // await waitFor(() => expect(getByText(/todo description/i)).not.toBeVisible())
   })
 });
 
