@@ -31,23 +31,22 @@ describe("Adding todos", () => {
     await waitFor(() => expect(addButton).toBeEnabled());
   });
 
-  test('should add todo when clicking button', async () => {
-    const { queryByText } = render(<App />);
-    const addButton = getAddTodoButton();
-    const inputElement = getAddTodoInput();
-    userEvent.type(inputElement, "Hello from jest");
-    userEvent.click(addButton);
-    await waitFor(() => expect(queryByText("Hello from jest")).toBeInTheDocument());
-  })
+  test("should add todo when clicking button", async () => {
+    addTodo();
+    expect(await screen.findByText("Hello from jest")).toBeInTheDocument();
+  });
 
-  test('should empty the input after adding a new todo', async () => {
-    render(<App />);
-    const addButton = getAddTodoButton();
-    const inputElement = getAddTodoInput();
-    userEvent.type(inputElement, "Hello from jest");
-    userEvent.click(addButton);
-    await waitFor(() => { expect(inputElement).toHaveValue("") })
-  })
+  test("should empty the input after adding a new todo", async () => {
+    const { inputElement } = addTodo();
+    await waitFor(() => {
+      expect(inputElement).toHaveValue("");
+    });
+  });
+
+  test("should disable add todo button after creating a new todo", async () => {
+    const { addButton } = addTodo();
+    await waitFor(() => expect(addButton).toBeDisabled());
+  });
 });
 
 function getAddTodoInput() {
@@ -56,4 +55,13 @@ function getAddTodoInput() {
 
 function getAddTodoButton() {
   return screen.getByTestId("add-todo");
+}
+
+function addTodo(description = "Hello from jest") {
+  render(<App />);
+  const addButton = getAddTodoButton();
+  const inputElement = getAddTodoInput();
+  userEvent.type(inputElement, description);
+  userEvent.click(addButton);
+  return { addButton, inputElement };
 }
