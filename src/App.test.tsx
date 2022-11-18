@@ -30,6 +30,24 @@ describe("Adding todos", () => {
     userEvent.type(inputElement, "Hello");
     await waitFor(() => expect(addButton).toBeEnabled());
   });
+
+  test('should add todo when clicking button', async () => {
+    const { queryByText } = render(<App />);
+    const addButton = getAddTodoButton();
+    const inputElement = getAddTodoInput();
+    userEvent.type(inputElement, "Hello from jest");
+    userEvent.click(addButton);
+    await waitFor(() => expect(queryByText("Hello from jest")).toBeInTheDocument());
+  })
+
+  test('should empty the input after adding a new todo', async () => {
+    render(<App />);
+    const addButton = getAddTodoButton();
+    const inputElement = getAddTodoInput();
+    userEvent.type(inputElement, "Hello from jest");
+    userEvent.click(addButton);
+    await waitFor(() => { expect(inputElement).toHaveValue("") })
+  })
 });
 
 function getAddTodoInput() {
