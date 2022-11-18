@@ -1,8 +1,8 @@
-import React from 'react'
-import Todo, { TodoProps } from './Todo'
+import React from "react";
+import Todo, { ITodo } from "./Todo";
 
 interface ListTodosProps {
-  todos: TodoProps[]
+  todos: ITodo[];
 }
 
 const ListTodos: React.FC<ListTodosProps> = ({ todos }) => {
@@ -12,7 +12,7 @@ const ListTodos: React.FC<ListTodosProps> = ({ todos }) => {
         <Todo key={idx} {...todo} />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default ListTodos
+export default ListTodos;

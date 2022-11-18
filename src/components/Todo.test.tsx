@@ -8,6 +8,8 @@ afterAll(cleanup);
 const mockTodo: TodoProps = {
   completed: false,
   title: "todo title",
+  id: 1,
+  userId: 1,
 };
 
 describe("Showing todo", () => {
@@ -35,6 +37,8 @@ describe("Showing todo", () => {
     const completedTodo = {
       completed: true,
       title: "completed todo",
+      id: 1,
+      userId: 1,
     };
     render(<Todo {...completedTodo} />);
     expect(getToggleTodo()).toBeChecked();
@@ -53,10 +57,10 @@ describe("Showing todo", () => {
   });
 
   test("should delete TODO when clicking delete button", async () => {
-    const { getByTestId, queryByText } = render(<Todo {...mockTodo} />);
-    userEvent.click(getByTestId("delete-todo"));
+    render(<Todo {...mockTodo} />);
+    userEvent.click(screen.getByTestId("delete-todo"));
     await waitFor(() =>
-      expect(queryByText(/todo title/i)).not.toBeInTheDocument()
+      expect(screen.queryByText(/todo title/i)).not.toBeInTheDocument()
     );
     // await waitFor(() => expect(getByText(/todo title/i)).not.toBeVisible())
   });

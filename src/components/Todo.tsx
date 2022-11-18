@@ -1,9 +1,13 @@
 import { useState } from "react";
 
-export interface TodoProps {
+export type ITodo = {
+  userId: number;
+  id: number;
+  title: string;
   completed: boolean;
-  description: string;
-}
+};
+
+export interface TodoProps extends ITodo {}
 
 const Todo: React.FC<TodoProps> = ({ completed, title }) => {
   const [checked, setChecked] = useState(completed);

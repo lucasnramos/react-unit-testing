@@ -1,19 +1,19 @@
 import { FormEvent, useRef, useState } from "react";
 import "./App.css";
 import ListTodos from "./components/ListTodos";
-import { TodoProps } from "./components/Todo";
+import { ITodo } from "./components/Todo";
 
 function App() {
   const [disable, setDisable] = useState<boolean>(true);
-  const [todos, setTodos] = useState<TodoProps[]>([
-    { title: "Hi", completed: false },
+  const [todos, setTodos] = useState<ITodo[]>([
+    { id: 1, userId: 1, title: "Hi", completed: false },
   ]);
   const inputRef = useRef<HTMLInputElement>(null);
   const onAddTodo = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     setTodos((todos) => [
       ...todos,
-      { completed: false, title: inputRef.current!.value },
+      { id: 1, userId: 1, completed: false, title: inputRef.current!.value },
     ]);
     inputRef.current!.value = "";
     setDisable(true);
